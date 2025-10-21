@@ -1,15 +1,16 @@
 from fastapi import FastAPI
+from app.core.config import settings
+from app.routers.user_router import user_routers
+from app.db.base import Base
+from app.db.session import engine
 
-app = FastAPI()
+app = FastAPI(title=settings.app_name)
 
-@app.get("/")
-def read_root():
-    return { "message": "Hello, FastAPI"}
+# include routers
+app.include_router(user_routers)
 
-@app.get("/item/{item_id}/{query}")
-def read_item(item_id: int, query: str | None):
-    return { "message": "item has been retrieved", 
-            "data" : {
-                "item_id": item_id, "query": query
-            }
-        }
+# create table at startup (for demo only, production should use Alembic migration)
+@app.on_event("startup")
+async def on_startup():
+    async with engine.begin() as conn:
+        await conn.run_sync(Base.metadata.create_all)

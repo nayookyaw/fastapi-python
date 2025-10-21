@@ -3,7 +3,6 @@ from pydantic_settings import BaseSettings, SettingsConfigDict
 class Settings(BaseSettings):
     app_name: str = "FastAPI Boilerplate"
     env:str = "dev"
-    env_filename = ".env"
 
     db_user: str
     db_pass: str
@@ -18,6 +17,14 @@ class Settings(BaseSettings):
             f"mysql+aiomysql://{self.db_user}:{self.db_pass}"
             f"@{self.db_host}:{self.db_port}/{self.db_name}"
         )
-    model_config = SettingsConfigDict(env_file=env_filename, env_prefix="", extra="ignore")
+    
+    # v2 way to point at your .env
+    model_config = SettingsConfigDict(
+        env_file=".env",
+        env_file_encoding="utf-8",
+        # optional:
+        env_prefix="",     # e.g. "APP_" to read APP_DEBUG, APP_DATABASE_URL, ...
+        extra="ignore",    # ignore unknown .env keys instead of erroring
+    )
 
 settings = Settings()

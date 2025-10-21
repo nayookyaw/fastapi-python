@@ -12,4 +12,7 @@ async def create_user(db: AsyncSession, *, email: str, password: str, full_name:
     await db.commit()
     await db.refresh(user)
     return user
-    
+
+async def get_user_by_email(db: AsyncSession, email: str):
+    exist_user = await db.execute(select(User).where(User.email == email))
+    return exist_user.scalar_one_or_none()
