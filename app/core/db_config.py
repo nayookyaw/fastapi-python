@@ -12,9 +12,9 @@ class DBSettings(BaseSettings):
 
     @property
     def database_url(self) -> str:
-        # Async SQLAlchemy + aiomysql URL
+        # Async SQLAlchemy + asyncmy  URL
         return (
-            f"mysql+aiomysql://{self.db_user}:{self.db_pass}"
+            f"mysql+asyncmy://{self.db_user}:{self.db_pass}"
             f"@{self.db_host}:{self.db_port}/{self.db_name}"
         )
     

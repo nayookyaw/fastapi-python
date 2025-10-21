@@ -10,7 +10,7 @@ fastapi = { version = "*", extras = ["standard"] }
 uvicorn = { version = "*", extras = ["standard"] }
 pydantic-settings = ">=2"
 sqlalchemy = ">=2.0"
-aiomysql = ">=0.2"
+asyncmy = "^0.2.9"
 alembic = ">=1.13"
 passlib = { version = ">=1.7", extras = ["bcrypt"] }
 python-dotenv = ">=1.0"
