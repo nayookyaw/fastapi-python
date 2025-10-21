@@ -15,3 +15,9 @@ poetry install <br>
 
 # how to run app
 uvicorn main:app --reload <br>
+
+# migration db (alembic)
+alembic revision --autogenerate -m "xxx your comments" <br>
+
+alembic upgrade head <br>
+alembic downgrade -1 <br>
