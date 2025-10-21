@@ -1,6 +1,6 @@
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
-class Settings(BaseSettings):
+class DBSettings(BaseSettings):
     app_name: str = "FastAPI Boilerplate"
     env:str = "dev"
 
@@ -27,4 +27,4 @@ class Settings(BaseSettings):
         extra="ignore",    # ignore unknown .env keys instead of erroring
     )
 
-settings = Settings()
+db_settings = DBSettings()

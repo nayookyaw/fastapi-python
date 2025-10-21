@@ -1,10 +1,10 @@
 from fastapi import FastAPI
-from app.core.config import settings
+from app.core.db_config import db_settings
 from app.routers.user_router import user_routers
 from app.db.base import Base
 from app.db.session import engine
 
-app = FastAPI(title=settings.app_name)
+app = FastAPI(title=db_settings.app_name)
 
 # include routers
 app.include_router(user_routers)

@@ -1,17 +1,26 @@
-[project]
+[tool.poetry]
 name = "fastapi-app"
 version = "0.1.0"
-requires-python = ">=3.10"
-dependencies = [
-  "fastapi[standard]",
-  "uvicorn[standard]",
-  "pydantic-settings>=2",
-  "SQLAlchemy>=2.0",
-  "aiomysql>=0.2",           # async MySQL driver
-  "alembic>=1.13",           # (optional) migrations
-  "passlib[bcrypt]>=1.7",    # password hashing
-  "python-dotenv>=1.0"
-]
+description = "A FastAPI application"
+package-mode = false
+
+[tool.poetry.dependencies]
+python = ">=3.10,<4.0"
+fastapi = { version = "*", extras = ["standard"] }
+uvicorn = { version = "*", extras = ["standard"] }
+pydantic-settings = ">=2"
+sqlalchemy = ">=2.0"
+aiomysql = ">=0.2"
+alembic = ">=1.13"
+passlib = { version = ">=1.7", extras = ["bcrypt"] }
+python-dotenv = ">=1.0"
+
+[tool.poetry.group.dev.dependencies]
+pytest = "*"
 
 [tool.pytest.ini_options]
 addopts = "-q"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
