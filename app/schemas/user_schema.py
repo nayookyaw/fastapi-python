@@ -5,7 +5,7 @@ class UserCreate(BaseModel):
     password: str
     full_name: str | None = None
 
-class UserGet(BaseModel):
+class UserScheme(BaseModel):
     id: int
     email: EmailStr
     full_name: str | None = None

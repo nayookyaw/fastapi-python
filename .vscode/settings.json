@@ -7,6 +7,7 @@
   "python.analysis.useLibraryCodeForTypes": true,
   "python.languageServer": "Pylance",
   "python.analysis.diagnosticSeverityOverrides": {
-    "reportUnusedImport": "none"
+    "reportUnusedImport": "none",
+    "reportUnusedVariable": "none"
   }
 }

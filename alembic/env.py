@@ -3,9 +3,11 @@ from logging.config import fileConfig
 from alembic import context
 from sqlalchemy.ext.asyncio import create_async_engine
 from sqlalchemy import pool
+from sqlalchemy.engine import Connection
 
 from app.core.db_config import db_settings
 from app.db.base import Base
+from app import models  # ✅ This triggers model registration
 
 config = context.config
 if config.config_file_name is not None:
@@ -25,8 +27,7 @@ def run_migrations_offline():
     )
     with context.begin_transaction():
         context.run_migrations()
-
-def _run_sync_migrations(connection):
+def _run_sync_migrations(connection: Connection) -> None:
     context.configure(
         connection=connection,
         target_metadata=target_metadata,
@@ -34,6 +35,7 @@ def _run_sync_migrations(connection):
         compare_server_default=True,
     )
     with context.begin_transaction():
+        context.run_migrations()
         context.run_migrations()
 
 async def run_migrations_online():
