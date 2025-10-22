@@ -1,0 +1,12 @@
+{
+  "python.analysis.typeCheckingMode": "strict",
+  "python.analysis.diagnosticMode": "workspace",
+  "python.analysis.autoImportCompletions": true,
+  "python.analysis.reportMissingImports": true,
+  "python.analysis.reportMissingTypeStubs": true,
+  "python.analysis.useLibraryCodeForTypes": true,
+  "python.languageServer": "Pylance",
+  "python.analysis.diagnosticSeverityOverrides": {
+    "reportUnusedImport": "none"
+  }
+}

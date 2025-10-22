@@ -2,11 +2,11 @@ from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy.ext.asyncio import AsyncSession
 from app.api.deps import get_db
 from app.schemas.user import UserCreate, UserGet
-from app.dao.users import create_user, get_user_by_email
+from app.dao.user_dao import create_user, get_user_by_email
 
 user_routers = APIRouter(prefix="/user", tags=["users"])
 
-@user_routers.post("", response_model=UserGet, status_code=status.HTTP_201_CREATED)
+@user_routers.post("")
 async def register(payload: UserCreate, db: AsyncSession = Depends(get_db)):
     exit = await get_user_by_email(db, payload.email)
     if exit:

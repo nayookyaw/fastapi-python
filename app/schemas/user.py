@@ -1,7 +1,7 @@
-from pydantic import BaseModel, EmailStr
+from pydantic import BaseModel, EmailStr, Field
 
 class UserCreate(BaseModel):
-    email: EmailStr
+    email: EmailStr = Field (..., description="Must be a valid email address")
     password: str
     full_name: str | None = None
 

@@ -21,3 +21,13 @@ alembic revision --autogenerate -m "xxx your comments" <br>
 
 alembic upgrade head <br>
 alembic downgrade -1 <br>
+
+# Response bodies
+1. Validation failed
+{
+    "status" : 422,
+    "content" : {
+        "errors": exc.errors(),
+        "message": "Validation failed"
+    }
+}
