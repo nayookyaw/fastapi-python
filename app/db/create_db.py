@@ -20,9 +20,9 @@ def _render(url: URL) -> str:
 
 # --- engines (admin created now, app engine deferred) ----------------------
 
-ADMIN_ENGINE: AsyncEngine | None = None
-APP_ENGINE: AsyncEngine | None = None
-DB_NAME: str | None = None
+admin_engine: AsyncEngine | None = None
+app_engine: AsyncEngine | None = None
+db_name: str | None = None
 
 def _init_admin() -> Tuple[AsyncEngine, str, URL]:
     url = make_url(db_settings.database_url)
@@ -52,21 +52,20 @@ def _init_app_engine(url: URL) -> AsyncEngine:
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
-    global ADMIN_ENGINE, APP_ENGINE, DB_NAME
-    ADMIN_ENGINE, DB_NAME, full_url = _init_admin()
+    global admin_engine, app_engine, db_name
+    admin_engine, db_name, full_url = _init_admin()
     print(f"[lifespan] admin DSN: {_render(_admin_url(full_url))}")
     print(f"[lifespan] app   DSN: {_render(full_url)}")
     try:
-        # 1) Ensure DB exists (no tables/migrations here)
-        await _ensure_database_exists(ADMIN_ENGINE, DB_NAME)
+        # Ensure DB exists (no tables/migrations here)
+        await _ensure_database_exists(admin_engine, db_name)
 
-        # 2) Only now create the app engine that points to your DB
-        APP_ENGINE = _init_app_engine(full_url)
+        # Only now create the app engine that points to your DB
+        app_engine = _init_app_engine(full_url)
 
         yield
     finally:
         # Clean shutdown
-        if APP_ENGINE is not None:
-            await APP_ENGINE.dispose()
-        if ADMIN_ENGINE is not None:
-            await ADMIN_ENGINE.dispose()
+        if app_engine is not None:
+            await app_engine.dispose()
+        await admin_engine.dispose()
